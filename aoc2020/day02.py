@@ -10,11 +10,8 @@ def input(path):
 	with open(path) as f:
 		return [parse(line) for line in f.readlines()]
 
-def in_range(cs, mn, mx):
-	return cs >= mn and cs <= mx
-
 def min_max_chars(pwds):
-	return sum([1 for mn, mx, c, pwd in pwds if in_range(Counter(pwd)[c], mn, mx)])
+	return sum([1 for mn, mx, c, pwd in pwds if mn <= Counter(pwd)[c] <= mx])
 
 def char_in_exactly_one_of_the_positions(pwds):
 	return sum([1 for p0, p1, c, pwd in pwds if (pwd[p0-1] == c) ^ (pwd[p1-1] == c)])
