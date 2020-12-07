@@ -1,4 +1,3 @@
-
 def program(path):
 	with open(path) as f:
 		return [int(n) for l in f.readlines() for n in l.strip().split(',')]
