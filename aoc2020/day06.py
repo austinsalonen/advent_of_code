@@ -1,38 +1,26 @@
-def answers(path):
-	groups = []
-	group = set()
+from functools import reduce
+
+def grouped(path):
+	g = []
 	with open(path) as f:
 		for line in f.readlines():
-			ans = line.strip()
-
-			if ans == '':
-				groups.append(group)
-				group = set()
+			line = line.strip()
+			if line == '':
+				yield g
+				g = []
 				continue
 
-			group = group | set(ans)
+			g.append(set(line))
+
+	yield g
 
 
-	groups.append(group)
-	return groups
+def answers(given):
+	return sum(len(reduce(set.union, xs)) for xs in given)
 
-def common_yes(path):
-	groups = []
-	group = set('abcdefghijklmnopqrstuvwxyz')
-	with open(path) as f:
-		for line in f.readlines():
-			ans = line.strip()
+def common_yes(given):
+	return sum(len(reduce(set.intersection, xs)) for xs in given)
 
-			if ans == '':
-				groups.append(group)
-				group = set('abcdefghijklmnopqrstuvwxyz')
-				continue
-
-			group = group & set(ans)
-
-
-	groups.append(group)
-	return groups
-
-print('part 1 =', sum(len(g) for g in answers('day06.input')))
-print('part 2 =', sum(len(g) for g in common_yes('day06.input')))
+gs = list(grouped('day06.input'))
+print('part 1 =', answers(gs))
+print('part 2 =', common_yes(gs))
