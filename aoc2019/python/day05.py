@@ -1,21 +1,14 @@
-from int_code import run, program
+from int_code import program, IntCode
 from copy import copy
-
-buffer = []
-prg = [3,0,4,0,99]
-run(prg, input=lambda: 1, output=buffer.append)
-
-assert [1] == buffer
-
 
 prg = program('day05.input')
 
-output = []
-run(copy(prg), input=lambda: 1, output=output.append)
+c = IntCode(prg, [1])
+print('part 1 =', c.run())
 
-print('part 1 =', output[-1])
+c = IntCode(prg, [5])
+print('part 2 =', c.run())
 
-output = []
-run(copy(prg), input=lambda: 5, output=output.append)
-
-print('part 2 =', output[-1])
+# part 1 = 6069343
+# part 2 = 3188550
+# [Finished in 0.6s]
